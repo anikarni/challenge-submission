@@ -30,3 +30,4 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Routing
 app.get('/', accountController.listAccounts)
 app.post('/accounts/create', accountController.createAccount)
+app.post('/accounts/:id/delete', accountController.deleteAccount)

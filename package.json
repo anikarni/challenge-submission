@@ -9,7 +9,7 @@
     "start": "NODE_ENV=production node dist/index.js",
     "deploy": "npm run build && now --public",
     "deploy:ci": "npm run deploy -- --token $NOW_TOKEN",
-    "watch": "npm run build -- -w & nodemon dist/index.js",
+    "watch": "npm run build -- -w & mongod --dbpath=data & nodemon dist/index.js",
     "test": "TS_NODE_FILES=true mocha -r ts-node/register spec/helper.ts spec/**/*Spec.ts",
     "test:watch": "npm test -- -w --watch-extensions ts"
   },
@@ -21,7 +21,8 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "mongodb": "^3.1.1",
-    "typescript": "^2.9.2"
+    "typescript": "^2.9.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/chai": "^4.1.4",

@@ -1,12 +1,12 @@
 import { expect } from 'chai'
-import { stub } from 'sinon'
+import { stub, match } from 'sinon'
 import accountDao from '../src/accountDao'
 
 describe('Account Dao', () => {
   let dbStub
 
   beforeEach(() => {
-    dbStub = { find: stub(), insertOne: stub().resolves() }
+    dbStub = { find: stub(), insertOne: stub().resolves(), deleteOne: stub().resolves() }
     accountDao.initialize({ collection: () => dbStub })
   })
 
@@ -17,10 +17,18 @@ describe('Account Dao', () => {
   })
 
   it('persists account in db', () => {
-    const account = { id: '3', email: 'a@bc' }
-    return accountDao.insertAccount(account)
+
+    return accountDao.insertAccount('a@bc')
       .then(() => {
-        expect(dbStub.insertOne).to.have.been.calledWith(account)
+        expect(dbStub.insertOne).to.have.been
+          .calledWith({ id: match(/[\w\d-]+/), email: 'a@bc' })
+      })
+  })
+
+  it('deletes one account from db', () => {
+    return accountDao.deleteAccount('1')
+      .then(() => {
+        expect(dbStub.deleteOne).to.have.been.calledWith({ id: '1' })
       })
   })
 })

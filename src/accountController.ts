@@ -8,8 +8,13 @@ const listAccounts = (req: Request, res: Response) => {
 }
 
 const createAccount = (req: Request, res: Response) => {
-  return accountDao.insertAccount(req.body)
+  return accountDao.insertAccount(req.body.email)
     .then(() => res.redirect('/'))
 }
 
-export default { listAccounts, createAccount }
+const deleteAccount = (req: Request, res: Response) => {
+  return accountDao.deleteAccount(req.params.id)
+    .then(() => res.redirect('/'))
+}
+
+export default { listAccounts, createAccount, deleteAccount }
