@@ -6,7 +6,11 @@ describe('Account Dao', () => {
   let dbStub
 
   beforeEach(() => {
-    dbStub = { find: stub(), insertOne: stub().resolves(), deleteOne: stub().resolves() }
+    dbStub = {
+      find: stub(),
+      insertOne: stub().resolves(),
+      deleteOne: stub().resolves(),
+    }
     accountDao.initialize({ collection: () => dbStub })
   })
 
@@ -17,18 +21,17 @@ describe('Account Dao', () => {
   })
 
   it('persists account in db', () => {
-
-    return accountDao.insertAccount('a@bc')
-      .then(() => {
-        expect(dbStub.insertOne).to.have.been
-          .calledWith({ id: match(/[\w\d-]+/), email: 'a@bc' })
+    return accountDao.insertAccount('a@bc').then(() => {
+      expect(dbStub.insertOne).to.have.been.calledWith({
+        id: match(/[\w\d-]+/),
+        email: 'a@bc',
       })
+    })
   })
 
   it('deletes one account from db', () => {
-    return accountDao.deleteAccount('1')
-      .then(() => {
-        expect(dbStub.deleteOne).to.have.been.calledWith({ id: '1' })
-      })
+    return accountDao.deleteAccount('1').then(() => {
+      expect(dbStub.deleteOne).to.have.been.calledWith({ id: '1' })
+    })
   })
 })

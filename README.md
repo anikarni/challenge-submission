@@ -47,5 +47,3 @@ To access the app, go to: https://naturalcycles.now.sh/
 - email validation
 - update email
 - production ready
-- prettier
-

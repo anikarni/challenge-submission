@@ -11,16 +11,19 @@ const DB_NAME = 'accounts'
 const app = express()
 
 // Start db connection
-MongoClient.connect(DB_URL, (err, client) => {
-  if (err) throw err
+MongoClient.connect(
+  DB_URL,
+  (err, client) => {
+    if (err) throw err
 
-  console.log('Connected to database server')
-  const db = client.db(DB_NAME)
-  accountDao.initialize(db)
+    console.log('Connected to database server')
+    const db = client.db(DB_NAME)
+    accountDao.initialize(db)
 
-  // Start app
-  app.listen(PORT, () => console.log(`App listening on port ${PORT}`))
-})
+    // Start app
+    app.listen(PORT, () => console.log(`App listening on port ${PORT}`))
+  },
+)
 
 app.set('views', path.join(__dirname, '../templates'))
 app.set('view engine', 'ejs')

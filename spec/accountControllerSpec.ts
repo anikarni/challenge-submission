@@ -23,16 +23,20 @@ describe('Account controller', () => {
   })
 
   it('renders list of accounts', () => {
-    return accountController.listAccounts(undefined, <Response> response)
+    return accountController
+      .listAccounts(undefined, <Response>response)
       .then(() => {
-        expect(response.render).to.have.been
-          .calledWith('accounts', { title: 'List of Accounts', accounts })
+        expect(response.render).to.have.been.calledWith('accounts', {
+          title: 'List of Accounts',
+          accounts,
+        })
       })
   })
 
   it('creates a new account', () => {
     const request: Partial<Request> = { body: { email: '234' } }
-    return accountController.createAccount(<Request> request, <Response> response)
+    return accountController
+      .createAccount(<Request>request, <Response>response)
       .then(() => {
         expect(createAccountStub).to.have.been.calledWith('234')
       })
@@ -40,7 +44,8 @@ describe('Account controller', () => {
 
   it('reloads page if new account', () => {
     const request: Partial<Request> = { body: {} }
-    return accountController.createAccount(<Request> request, <Response> response)
+    return accountController
+      .createAccount(<Request>request, <Response>response)
       .then(() => {
         expect(response.redirect).to.have.been.calledWith('/')
       })
@@ -48,7 +53,8 @@ describe('Account controller', () => {
 
   it('deletes account', () => {
     const request: Partial<Request> = { params: { id: 2 } }
-    return accountController.deleteAccount(<Request> request, <Response> response)
+    return accountController
+      .deleteAccount(<Request>request, <Response>response)
       .then(() => {
         expect(deleteAccountStub).to.have.been.calledWith(2)
       })
@@ -56,7 +62,8 @@ describe('Account controller', () => {
 
   it('reloads page after account is deleted', () => {
     const request: Partial<Request> = { params: { id: 2 } }
-    return accountController.deleteAccount(<Request> request, <Response> response)
+    return accountController
+      .deleteAccount(<Request>request, <Response>response)
       .then(() => {
         expect(response.redirect).to.have.been.calledWith('/')
       })
