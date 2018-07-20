@@ -10,13 +10,13 @@ app with the follow commands:
 ```sh
 npm install
 
-// run app in production mode (connecting to external db)
+# run app in production mode (connecting to external db)
 MONGO_URL=<EXTERNAL_URL> npm run build && npm start
 
-// serve app in dev mode
+# serve app in dev mode
 npm run serve
 
-// or, for development, use watch mode
+# or, for development, use watch mode
 npm run watch
 ```
 
@@ -29,7 +29,7 @@ To execute the tests, run:
 ```sh
 npm test
 
-// or, in watch mode
+# or, in watch mode
 npm run test:watch
 ```
 
