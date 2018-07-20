@@ -1,0 +1,5 @@
+{
+  "env": {
+    "MONGO_URL": "@my-app-mongo-url"
+  }
+}

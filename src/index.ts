@@ -6,12 +6,14 @@ import accountController from './accountController'
 import accountDao from './accountDao'
 
 const PORT = 8080
-const DB_URL = 'mongodb://localhost:27017'
+const DB_URL = process.env.MONGO_URL || 'mongodb://localhost:27017'
 const DB_NAME = 'accounts'
 const app = express()
 
 // Start db connection
 MongoClient.connect(DB_URL, (err, client) => {
+  if (err) throw err
+
   console.log('Connected to database server')
   const db = client.db(DB_NAME)
   accountDao.initialize(db)
