@@ -1,5 +1,6 @@
 import path from 'path'
 import express from 'express'
+import accountController from './accountController'
 
 const app = express()
 
@@ -9,7 +10,7 @@ app.set('views', path.join(__dirname, '../templates'))
 app.set('view engine', 'ejs')
 
 // Routing
-app.get('/', (req, res) => res.render('index'))
+app.get('/', accountController.listAccounts)
 
 // Start app
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`))
