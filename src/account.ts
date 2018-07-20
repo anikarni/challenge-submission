@@ -1,3 +1,4 @@
-export default class Account {
-  constructor(public id: String, public email: String) {}
+export default interface Account {
+  id: String;
+  email: String;
 }

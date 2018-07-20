@@ -1,7 +1,7 @@
-export default {
-  initialize: (db) => { this.db = db },
+import Account from './account'
 
-  getAccounts: () => {
-    return this.db.collection('accounts').find({}).toArray()
-  }
+export default {
+  initialize: (db) => { this.col = db.collection('accounts') },
+  getAccounts: () => { return this.col.find({}).toArray() },
+  insertAccount: (account: Account) => { return this.col.insertOne(account) }
 }

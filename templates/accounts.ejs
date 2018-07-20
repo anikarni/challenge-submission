@@ -4,5 +4,14 @@
     <% accounts.forEach((account) => { %>
       <p><%= account.id %>
     <% }) %>
+
+    <h2>Create Account</h2>
+    <form name="createAccount" method="POST" action="/accounts/create">
+      <label for="accountId">ID</label>
+      <input type="text" name="id" />
+      <label for="accountEmail">Email</label>
+      <input type="text" name="email" />
+      <input type="submit" value="Save" />
+    </form>
   </body>
 </html>
