@@ -1,10 +1,13 @@
 {
-	"compilerOptions": {
-		"esModuleInterop": true,
-		"sourceMap": true,
-		"outDir": "dist"
-	},
-	"include": [
-		"src/**/*"
-	]
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*"
+  ]
 }

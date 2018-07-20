@@ -3,9 +3,8 @@ import accountDao from './accountDao'
 
 export default {
   listAccounts: (req: Request, res: Response) => {
-    res.render('accounts', {
-      title: 'List of Accounts',
-      accounts: accountDao.getAccounts()
-    })
+    return accountDao.getAccounts().then(accounts =>
+      res.render('accounts', { title: 'List of Accounts', accounts })
+    )
   }
 }

@@ -1,5 +1,7 @@
 export default {
+  initialize: (db) => { this.db = db },
+
   getAccounts: () => {
-    return [{ id: 1 }, { id: 2 }]
+    return this.db.collection('accounts').find({}).toArray()
   }
 }
