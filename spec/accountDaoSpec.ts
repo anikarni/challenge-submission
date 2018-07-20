@@ -17,7 +17,7 @@ describe('Account Dao', () => {
   })
 
   it('persists account in db', () => {
-    const account = { id: 3 }
+    const account = { id: '3', email: 'a@bc' }
     return accountDao.insertAccount(account)
       .then(() => {
         expect(dbStub.insertOne).to.have.been.calledWith(account)

@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "npm run build && node dist/index.js",
     "watch": "npm run build -- -w & nodemon dist/index.js",
-    "test": "mocha -r ts-node/register spec/helper.ts spec/**/*Spec.ts",
+    "test": "TS_NODE_FILES=true mocha -r ts-node/register spec/helper.ts spec/**/*Spec.ts",
     "test:watch": "npm test -- -w --watch-extensions ts"
   },
   "author": "",
