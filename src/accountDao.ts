@@ -5,14 +5,14 @@ export default {
   initialize: db => {
     this.col = db.collection('accounts')
   },
-  getAccounts: () => {
-    return this.col.find({}).toArray()
-  },
-  insertAccount: (email: String) => {
-    const id = uuid()
-    return this.col.insertOne({ id, email })
-  },
-  deleteAccount: (id: String) => {
-    return this.col.deleteOne({ id })
+
+  getAccounts: () => this.col.find({}).toArray(),
+
+  insertAccount: (email: String) => this.col.insertOne({ id: uuid(), email }),
+
+  deleteAccount: (id: String) => this.col.deleteOne({ id }),
+
+  updateAccount: (id: String, email: String) => {
+    return this.col.updateOne({ id }, { $set: { email } })
   },
 }

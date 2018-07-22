@@ -10,6 +10,7 @@ describe('Account Dao', () => {
       find: stub(),
       insertOne: stub().resolves(),
       deleteOne: stub().resolves(),
+      updateOne: stub().resolves(),
     }
     accountDao.initialize({ collection: () => dbStub })
   })
@@ -32,6 +33,15 @@ describe('Account Dao', () => {
   it('deletes one account from db', () => {
     return accountDao.deleteAccount('1').then(() => {
       expect(dbStub.deleteOne).to.have.been.calledWith({ id: '1' })
+    })
+  })
+
+  it('updates one account from db', () => {
+    return accountDao.updateAccount('1', '123@2').then(() => {
+      expect(dbStub.updateOne).to.have.been.calledWith(
+        { id: '1' },
+        { $set: { email: '123@2' } },
+      )
     })
   })
 })

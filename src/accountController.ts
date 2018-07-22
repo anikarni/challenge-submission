@@ -17,4 +17,10 @@ const deleteAccount = (req: Request, res: Response) => {
   return accountDao.deleteAccount(req.params.id).then(() => res.redirect('/'))
 }
 
-export default { listAccounts, createAccount, deleteAccount }
+const updateAccount = (req: Request, res: Response) => {
+  return accountDao
+    .updateAccount(req.params.id, req.body.email)
+    .then(() => res.redirect('/'))
+}
+
+export default { listAccounts, createAccount, deleteAccount, updateAccount }
