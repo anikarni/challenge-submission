@@ -16,17 +16,18 @@ describe('Account Dao', () => {
   })
 
   it('retrieves accounts from db', () => {
-    const accounts = [{ id: 2 }, { id: 3 }]
+    const accounts = [
+      { id: '2', email: 'd@b.com' },
+      { id: '3', email: 'd@b.com' },
+    ]
     dbStub.find.returns({ toArray: stub().resolves(accounts) })
-    return expect(accountDao.getAccounts()).to.eventually.equal(accounts)
+    return expect(accountDao.getAccounts()).to.eventually.eql(accounts)
   })
 
   it('persists account in db', () => {
-    return accountDao.insertAccount('a@bc').then(() => {
-      expect(dbStub.insertOne).to.have.been.calledWith({
-        id: match(/[\w\d-]+/),
-        email: 'a@bc',
-      })
+    const account = { id: '123', email: 'a@bc.com' }
+    return accountDao.insertAccount(account).then(() => {
+      expect(dbStub.insertOne).to.have.been.calledWith(account)
     })
   })
 
@@ -37,10 +38,11 @@ describe('Account Dao', () => {
   })
 
   it('updates one account from db', () => {
-    return accountDao.updateAccount('1', '123@2').then(() => {
+    const account = { id: '123', email: 'a@bc.com' }
+    return accountDao.updateAccount(account).then(() => {
       expect(dbStub.updateOne).to.have.been.calledWith(
-        { id: '1' },
-        { $set: { email: '123@2' } },
+        { id: '123' },
+        { $set: { email: 'a@bc.com' } },
       )
     })
   })

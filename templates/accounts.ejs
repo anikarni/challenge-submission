@@ -1,6 +1,6 @@
 <!DOCTYPE html>
   <body>
-    <h1>List of Accounts</h1>
+    <h2>List of Accounts</h2>
     <table>
       <tr>
         <th>ID</th>
@@ -35,5 +35,9 @@
       <input type="text" name="email" />
       <input type="submit" value="Save" />
     </form>
+
+    <% if (error) { %>
+      <h3>Error: <%= error %></h3>
+    <% } %>
   </body>
 </html>

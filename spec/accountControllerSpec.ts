@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { spy, stub } from 'sinon'
+import { spy, stub, match } from 'sinon'
 import { Request, Response } from 'express'
 import accountController from '../src/accountController'
 import accountDao from '../src/accountDao'
@@ -29,23 +29,27 @@ describe('Account controller', () => {
       .listAccounts(undefined, <Response>response)
       .then(() => {
         expect(response.render).to.have.been.calledWith('accounts', {
-          title: 'List of Accounts',
+          title: 'Accounts',
           accounts,
+          error: '',
         })
       })
   })
 
   it('creates a new account', () => {
-    const request: Partial<Request> = { body: { email: '234' } }
+    const request: Partial<Request> = { body: { email: 'a@bc.com' } }
     return accountController
       .createAccount(<Request>request, <Response>response)
       .then(() => {
-        expect(createAccountStub).to.have.been.calledWith('234')
+        expect(createAccountStub).to.have.been.calledWith({
+          id: match(/[\w\d-]+/),
+          email: 'a@bc.com',
+        })
       })
   })
 
   it('reloads page if new account', () => {
-    const request: Partial<Request> = { body: {} }
+    const request: Partial<Request> = { body: { email: 'a@bc.com' } }
     return accountController
       .createAccount(<Request>request, <Response>response)
       .then(() => {
@@ -74,21 +78,37 @@ describe('Account controller', () => {
   it('updates an account', () => {
     const request: Partial<Request> = {
       params: { id: 2 },
-      body: { email: 'abc@d' },
+      body: { email: 'ab@d.com' },
     }
     return accountController
       .updateAccount(<Request>request, <Response>response)
       .then(() => {
-        expect(updateAccountStub).to.have.been.calledWith(2, 'abc@d')
+        expect(updateAccountStub).to.have.been.calledWith({
+          id: 2,
+          email: 'ab@d.com',
+        })
       })
   })
 
   it('reloads page after account is deleted', () => {
-    const request: Partial<Request> = { params: {}, body: {} }
+    const request: Partial<Request> = { params: {}, body: { email: 'a@b.com' } }
     return accountController
       .updateAccount(<Request>request, <Response>response)
       .then(() => {
         expect(response.redirect).to.have.been.calledWith('/')
+      })
+  })
+
+  it('renders error', () => {
+    const request: Partial<Request> = { params: {}, body: { email: 'ab.com' } }
+    return accountController
+      .updateAccount(<Request>request, <Response>response)
+      .then(() => {
+        expect(response.render).to.have.been.calledWith('accounts', {
+          title: 'Accounts',
+          accounts,
+          error: 'Invalid email',
+        })
       })
   })
 })

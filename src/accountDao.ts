@@ -1,18 +1,29 @@
 import Account from './account'
-import uuid from 'uuid/v4'
 
 export default {
   initialize: db => {
     this.col = db.collection('accounts')
   },
 
-  getAccounts: () => this.col.find({}).toArray(),
+  getAccounts: () => {
+    return this.col
+      .find({})
+      .toArray()
+      .then(docs => {
+        return docs.map(doc => new Account(doc.id, doc.email))
+      })
+  },
 
-  insertAccount: (email: String) => this.col.insertOne({ id: uuid(), email }),
+  insertAccount: (account: Account) => {
+    return this.col.insertOne(account)
+  },
 
-  deleteAccount: (id: String) => this.col.deleteOne({ id }),
+  deleteAccount: (id: string) => this.col.deleteOne({ id }),
 
-  updateAccount: (id: String, email: String) => {
-    return this.col.updateOne({ id }, { $set: { email } })
+  updateAccount: (account: Account) => {
+    return this.col.updateOne(
+      { id: account.id },
+      { $set: { email: account.email } },
+    )
   },
 }
