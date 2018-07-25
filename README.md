@@ -1,6 +1,7 @@
 # Accounts CRUD
 
 This is a simple implementation of a CRUD application.
+To access the app, go to: https://naturalcycles.now.sh/
 
 ## Running the app
 
@@ -44,7 +45,13 @@ latest version of the app is running. However, if you wish to deploy locally,
 you will need to have your [`now`](https://zeit.co/now) credentials setup
 before running `npm run deploy`.
 
-To access the app, go to: https://naturalcycles.now.sh/
+After deploy, the new version will be available in a unique url (listed in the
+deploy script logs), but will not be exposed to the `naturalcycles.now.sh`
+alias. (This is also not done in the pipeline). To create the alias, run:
+
+```sh
+now alias <UNIQUE_URL> naturalcycles.now.sh
+```
 
 ## Improvements
 
