@@ -46,6 +46,18 @@ before running `npm run deploy`.
 
 To access the app, go to: https://naturalcycles.now.sh/
 
-## TODO
+## Improvements
 
-- production ready
+For this project to be ready for production, I could forsee a few imporvements
+being necessary, particularly as it pertains to the robustness of error
+handling and logging. What happens when the database connection fails? Should
+we be showing unparsed error messages to the user? Probably not.
+
+I would also ensure inputs are validated with a bit more meticulousness. Right
+now, the user can delete any documents in the db's `accounts` collection, with
+no insurance it is a safe account to delete or not, for example. (Though, for
+the moment, there are no restrictions as to what the user can delete). We could
+perhaps complement the solution with the use of a object modeling framework
+such as `mongoose`.
+
+Lastly, the UI could be greatly improved, obviously.
