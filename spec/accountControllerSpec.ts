@@ -7,7 +7,7 @@ import accountDao from '../src/accountDao'
 describe('Account controller', () => {
   let getAccountsStub, createAccountStub, deleteAccountStub, updateAccountStub
   let response: Partial<Response>
-  const accounts = [{ account: 1 }, { account: 2 }]
+  const accounts = [{ account: 1, email: 'existing@bc.com' }, { account: 2 }]
 
   beforeEach(() => {
     response = { render: spy(), redirect: spy() }
@@ -44,6 +44,19 @@ describe('Account controller', () => {
         expect(createAccountStub).to.have.been.calledWith({
           id: match(/[\w\d-]+/),
           email: 'a@bc.com',
+        })
+      })
+  })
+
+  it('validates email is unique', () => {
+    const request: Partial<Request> = { body: { email: 'existing@bc.com' } }
+    return accountController
+      .createAccount(<Request>request, <Response>response)
+      .then(() => {
+        expect(response.render).to.have.been.calledWith('accounts', {
+          title: 'Accounts',
+          accounts,
+          error: 'Account with given email already exists!',
         })
       })
   })

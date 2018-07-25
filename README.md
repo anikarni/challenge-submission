@@ -33,6 +33,10 @@ npm test
 npm run test:watch
 ```
 
+To ensure new code is formatted as expected, run `npm run lint`. This will
+modify the code, fixing any formatting issues found. Make sure to commit your
+changes.
+
 ## Deploying the app
 
 Pushing to the `master` branch on this repo will automatically ensure the
@@ -44,5 +48,4 @@ To access the app, go to: https://naturalcycles.now.sh/
 
 ## TODO
 
-- email validation
 - production ready

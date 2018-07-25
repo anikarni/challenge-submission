@@ -4,11 +4,9 @@ import accountDao from './accountDao'
 import Account from './account'
 
 const handlesError = cb => (req: Request, res: Response) => {
-  try {
-    return cb(req, res)
-  } catch (error) {
-    return renderPage(res, error.message)
-  }
+  return Promise.resolve(cb(req, res)).catch(e => {
+    return renderPage(res, e.message)
+  })
 }
 
 const renderPage = (res: Response, error: string = '') => {
@@ -17,13 +15,22 @@ const renderPage = (res: Response, error: string = '') => {
   })
 }
 
+const validateEmailUnique = (email: String) => {
+  return accountDao.getAccounts().then(accounts => {
+    if (accounts.map(a => a.email).includes(email))
+      throw new Error('Account with given email already exists!')
+  })
+}
+
 const listAccounts = handlesError((req: Request, res: Response) => {
   return renderPage(res)
 })
 
 const createAccount = handlesError((req: Request, res: Response) => {
-  const account = new Account(uuid(), req.body.email)
-  return accountDao.insertAccount(account).then(() => res.redirect('/'))
+  return validateEmailUnique(req.body.email).then(() => {
+    const account = new Account(uuid(), req.body.email)
+    return accountDao.insertAccount(account).then(() => res.redirect('/'))
+  })
 })
 
 const deleteAccount = handlesError((req: Request, res: Response) => {
@@ -31,8 +38,10 @@ const deleteAccount = handlesError((req: Request, res: Response) => {
 })
 
 const updateAccount = handlesError((req: Request, res: Response) => {
-  const account = new Account(req.params.id, req.body.email)
-  return accountDao.updateAccount(account).then(() => res.redirect('/'))
+  return validateEmailUnique(req.body.email).then(() => {
+    const account = new Account(req.params.id, req.body.email)
+    return accountDao.updateAccount(account).then(() => res.redirect('/'))
+  })
 })
 
 export default { listAccounts, createAccount, deleteAccount, updateAccount }
