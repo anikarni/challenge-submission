@@ -1,5 +1,7 @@
 # Accounts CRUD
 
+[![CircleCI](https://circleci.com/gh/anikarni/challenge-submission/tree/master.svg?style=svg)](https://circleci.com/gh/anikarni/challenge-submission/tree/master)
+
 This is a simple implementation of a CRUD application.
 To access the app, go to: https://naturalcycles.now.sh/
 
